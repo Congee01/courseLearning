@@ -8,4 +8,6 @@ public interface CourseLikesMapper {
     int insert(@Param("courseId") Integer courseId, @Param("userId") Integer userId);
 
     int count(@Param("courseId") Integer courseId, @Param("userId") Integer userId);
+
+    int countLikesOfCourse(@Param("courseId") Integer courseId);
 }

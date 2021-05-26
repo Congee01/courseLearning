@@ -31,6 +31,8 @@ public class Course {
     // 课程点赞数
     private Integer likes;
 
+    private boolean liked;
+
     public Integer getId() {
         return id;
     }
@@ -118,6 +120,9 @@ public class Course {
     public Integer getLikes() {
         return likes;
     }
+    public boolean getLiked(){
+        return liked;
+    }
 
     public void setTeacherName(String teacherName) {
         this.teacherName = teacherName == null ? null : teacherName.trim();
@@ -137,5 +142,7 @@ public class Course {
         this.cost = courseVO.getCost();
         this.teacherId = courseVO.getTeacherId();
         this.teacherName = courseVO.getTeacherName();
+        this.likes=courseVO.getLikes();
+        this.liked= courseVO.isLiked();
     }
 }

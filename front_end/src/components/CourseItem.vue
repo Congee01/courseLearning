@@ -22,13 +22,13 @@
         >学习课程</v-btn
       >
       <v-btn text v-show="status === -1 || !hasLogin" @click="handlePeek"
-        >浏览课程</v-btn
+      >浏览课程</v-btn
       >
       <v-btn
-        text
-        v-show="status === -1 || (status === 0 && !bought)"
-        @click="buyCourse"
-        >{{ cost === 0 ? "免费购买" : "购买课程" }}</v-btn
+          text
+          v-show="status === -1 || (status === 0 && !bought)"
+          @click="buyCourse"
+      >{{ cost === 0 ? "免费购买" : "购买课程" }}</v-btn
       >
     </v-card-actions>
     <v-row justify="end" class="pr-5">
@@ -40,10 +40,11 @@
         :color="!liked ? 'red' : 'black'"
         @click="handleLike"
       >
+
         <v-icon v-if="liked" dark>
           mdi-thumb-down
         </v-icon>
-        <v-icon dark v-else>
+        <v-icon v-else dark>
           mdi-heart
         </v-icon>
       </v-btn>
@@ -124,6 +125,7 @@ export default Vue.extend({
       this.$router.push(`/student/peek/${this.courseId}`);
     },
     handleLike() {
+      console.log("5");
       this.$emit("set-like", this.courseId);
     }
   },

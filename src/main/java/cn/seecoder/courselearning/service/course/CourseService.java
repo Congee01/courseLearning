@@ -25,4 +25,8 @@ public interface CourseService {
     ResultVO<CourseVO> createCourse(CourseVO courseVO);
 
     Course getByPrimaryKey(Integer courseId);
+    //用户点赞课程
+    ResultVO<CourseVO> setCourseLike(Integer uid,Integer courseId);
+    //用户取消点赞
+    ResultVO<CourseVO> cancelCourseLike(Integer uid,Integer courseId);
 }

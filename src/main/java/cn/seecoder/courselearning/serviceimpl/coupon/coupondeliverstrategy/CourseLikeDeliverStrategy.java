@@ -36,7 +36,7 @@ public class CourseLikeDeliverStrategy implements CouponDeliverStrategy {
         if (courseIdStr == null) return false;
         Integer courseId = Integer.valueOf(courseIdStr);
         // 获取用户点赞数
-        int result = courseLikesMapper.count(user.getId(), courseId);
+        int result = courseLikesMapper.count(courseId,user.getId());
         if (result == 1) {
             // 判断优惠券的适用范围
             Course course = courseMapper.selectByPrimaryKey(courseId);

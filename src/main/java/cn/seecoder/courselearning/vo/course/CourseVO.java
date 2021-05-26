@@ -59,6 +59,7 @@ public class CourseVO {
         teacherName = course.getTeacherName();
         likes = course.getLikes();
         liked = likes != null && likes > 0;
+        //liked=course.getLiked();
         bought = false;
         manageable = false;
     }
@@ -76,7 +77,26 @@ public class CourseVO {
         teacherName = course.getTeacherName();
         likes = course.getLikes();
         liked = likes != null && likes > 0;
+        //liked=course.getLiked();
         this.bought = bought;
         this.manageable = manageable;
     }
+
+    public CourseVO(@NonNull Course course, boolean bought, boolean manageable,boolean liked){
+        id = course.getId();
+        name = course.getName();
+        type = course.getType();
+        intro = course.getIntro();
+        picture = course.getPicture();
+        school = course.getSchool();
+        createTime = course.getCreateTime();
+        cost = course.getCost();
+        teacherId = course.getTeacherId();
+        teacherName = course.getTeacherName();
+        likes = course.getLikes();
+        this.liked = liked;
+        this.bought = bought;
+        this.manageable = manageable;
+    }
+
 }

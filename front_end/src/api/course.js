@@ -7,6 +7,7 @@ import { COURSE_MODULE } from "./_prefix";
  * @returns
  */
 export const getCourseById = payload => {
+    console.log("ById");
   const { uid, courseId } = payload;
   return axios.get(`${COURSE_MODULE}/${courseId}?uid=${uid}`).then(res => {
     return res.data;
@@ -47,6 +48,7 @@ export const getCoursesByType = payload => {
  * @returns
  */
 export const getBoughtCourses = uid => {
+    console.log("buy");
   return axios.get(`${COURSE_MODULE}/sid/${uid}`).then(res => {
     return res.data;
   });
@@ -99,10 +101,8 @@ export const createCourse = payload => {
  * @returns {Promise<*>}
  */
 export const getHotCourses = uid => {
-  return axios
-    .get(`${COURSE_MODULE}/hot/1`, {
-      params: { uid }
-    })
+    console.log("hot");
+  return axios.get(`${COURSE_MODULE}/hot/1`, {params: { uid }})
     .then(res => {
       return res.data;
     });
@@ -115,6 +115,7 @@ export const getHotCourses = uid => {
  * @returns {Promise<*>}
  */
 export const setCourseLike = (uid, courseId) => {
+    console.log("6");
   return axios
     .post(`${COURSE_MODULE}/like/${courseId}?uid=${uid}`)
     .then(res => {
@@ -123,6 +124,7 @@ export const setCourseLike = (uid, courseId) => {
 };
 
 export const setCourseDislike = (uid, courseId) => {
+    console.log("7");
   return axios
     .post(`${COURSE_MODULE}/cancel_like/${courseId}?uid=${uid}`)
     .then(res => {

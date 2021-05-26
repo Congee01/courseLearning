@@ -442,6 +442,7 @@ export default {
       const uid = window.localStorage.getItem("userId");
       getBoughtCourses(uid).then(res => {
         this.boughtCoursesList = res || [];
+
       });
     },
 
@@ -484,12 +485,21 @@ export default {
         if (res.liked) {
           // 分支2：若当前用户已经为该课程点过赞了，则调用取消点赞接口完成相关操作，可以仿照分支1的示例进行
           // TODO Add your code here
+          //当前用户已经点过赞则应该取消点赞
           setCourseDislike(uid, courseId).then(res => {
             if (res.code === 1) {
+              //取消点赞成功，设置提示条的内容、颜色并显示
+              console.log("1");
               this.snackBarMsg = res.msg;
               this.snackBarColor = "success";
               this.showSnackBar = true;
               this.fetchData();
+            }else{
+              //取消点赞失败的情况就是用户已经取消了对课程的赞，即当前用户是没有对该课程点赞的，应该调用点赞接口
+              console.log("2");
+              this.snackBarMsg = res.msg;
+              this.snackBarColor = "warning";
+              this.showSnackBar = true;
             }
           });
         } else {
@@ -497,7 +507,8 @@ export default {
           setCourseLike(uid, courseId).then(res => {
             if (res.code === 1) {
               //点赞成功，设置提示条的内容，颜色，并显示
-              this.snackBarMsg = res.msg;
+              console.log("3");
+              this.snackBarMsg=res.msg;
               this.snackBarColor = "success";
               this.showSnackBar = true;
               // 点赞成功后，课程的点赞数会变化，也会影响热门课程的排序，因此调用以下方法更新页面中的数据
@@ -506,6 +517,7 @@ export default {
               // 点赞失败，设置提示条的内容、颜色，并显示。目前这里显示的内容是： 点赞失败、请勿重复点赞。
               // 如果你的代码实现正确（以及后端代码） 应当不会出现这种情况。
               // 原因是在重复点赞前，你应当在这里已经判断出点过赞，因此应当跳转到分支2去执行取消点赞的逻辑
+              console.log("4");
               this.snackBarMsg = res.msg;
               this.snackBarColor = "warning";
               this.showSnackBar = true;

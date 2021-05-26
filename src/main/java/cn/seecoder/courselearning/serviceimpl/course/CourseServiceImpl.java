@@ -55,6 +55,7 @@ public class CourseServiceImpl implements CourseService {
         if(currPage==null || currPage<1) currPage=1;
         PageHelper.startPage(currPage, pageSize);
         PageInfo<Course> po = new PageInfo<>(courseMapper.selectHotCourses());
+
         return getCourseVOPageInfo(uid, po);
     }
 
@@ -63,7 +64,9 @@ public class CourseServiceImpl implements CourseService {
         List<CourseVO> ret = new ArrayList<>();
         List<Course> courseList = courseMapper.selectByStudentId(uid);
         for(Course course: courseList){
-            ret.add(new CourseVO(course, true, false));
+            boolean liked=courseLikesMapper.count(course.getId(),uid)>0;
+            CourseVO courseVO=new CourseVO(course,true,false,liked);
+            ret.add(courseVO);
         }
         return ret;
     }
@@ -83,13 +86,15 @@ public class CourseServiceImpl implements CourseService {
         Course course = courseMapper.selectByPrimaryKey(courseId);
         boolean bought = false;
         boolean manageable = false;
+        boolean liked=false;
         if(uid != null && uid > 0) {
             CourseOrder order = orderService.queryMostRecentOrder(uid, courseId);
             if(order != null)
                 bought = order.getStatus().equals(Constant.ORDER_STATUS_SUCCESS);
             manageable = uid.equals(course.getTeacherId());
+            liked= courseLikesMapper.count(courseId, uid) > 0;
         }
-        return new CourseVO(course, bought, manageable);
+        return new CourseVO(course, bought, manageable,liked);
     }
 
     @Override
@@ -112,6 +117,32 @@ public class CourseServiceImpl implements CourseService {
         return courseMapper.selectByPrimaryKey(courseId);
     }
 
+    @Override
+    public ResultVO<CourseVO> setCourseLike(Integer uid, Integer courseId) {
+        //先获取当前用户点赞的是哪一个课程
+
+        CourseVO courseVO=getCourse(courseId,uid);
+        int count=courseLikesMapper.count(courseId,uid);
+        if(count!=0){
+            return new ResultVO<>(Constant.REQUEST_FAIL,"请不要重复点赞！");
+        }
+        else{
+            courseLikesMapper.insert(courseId,uid);
+            courseVO.setLikes(courseLikesMapper.countLikesOfCourse(courseId));
+            //courseVO.setLiked(true);
+            return new ResultVO<>(Constant.REQUEST_SUCCESS,"点赞成功!",courseVO);
+        }
+    }
+    @Override
+    public ResultVO<CourseVO> cancelCourseLike(Integer uid, Integer courseId) {
+        CourseVO courseVO=getCourse(courseId,uid);
+        courseLikesMapper.deleteByPrimaryKey(courseId,uid);
+        courseVO.setLikes(courseLikesMapper.count(courseId,uid));
+        //courseVO.setLiked(false);
+        return new ResultVO<>(Constant.REQUEST_SUCCESS,"取消点赞成功!",courseVO);
+
+    }
+
     private PageInfo<CourseVO> getCourseVOPageInfo(Integer uid, PageInfo<Course> po) {
         PageInfo<CourseVO> result = PageInfoUtil.convert(po, CourseVO.class);
         if(uid != null && uid > 0){
@@ -121,6 +152,7 @@ public class CourseServiceImpl implements CourseService {
                 if(order != null)
                     vo.setBought(order.getStatus().equals(Constant.ORDER_STATUS_SUCCESS));
                 vo.setManageable(uid.equals(vo.getTeacherId()));
+                vo.setLiked(courseLikesMapper.count(vo.getId(),uid) >0);
             }
         }
         return result;
