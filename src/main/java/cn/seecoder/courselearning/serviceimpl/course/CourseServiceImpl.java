@@ -129,7 +129,7 @@ public class CourseServiceImpl implements CourseService {
         else{
             courseLikesMapper.insert(courseId,uid);
             courseVO.setLikes(courseLikesMapper.countLikesOfCourse(courseId));
-            //courseVO.setLiked(true);
+            courseVO.setLiked(true);
             return new ResultVO<>(Constant.REQUEST_SUCCESS,"点赞成功!",courseVO);
         }
     }
@@ -138,7 +138,7 @@ public class CourseServiceImpl implements CourseService {
         CourseVO courseVO=getCourse(courseId,uid);
         courseLikesMapper.deleteByPrimaryKey(courseId,uid);
         courseVO.setLikes(courseLikesMapper.count(courseId,uid));
-        //courseVO.setLiked(false);
+        courseVO.setLiked(false);
         return new ResultVO<>(Constant.REQUEST_SUCCESS,"取消点赞成功!",courseVO);
 
     }
