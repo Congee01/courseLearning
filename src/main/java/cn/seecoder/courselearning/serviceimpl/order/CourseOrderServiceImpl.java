@@ -192,6 +192,8 @@ public class CourseOrderServiceImpl implements CourseOrderService {
         if(userVO.getBalance()>=order.getCost()){
             userService.decreaseBalance(userVO.getId(),order.getCost());
             // 支付成功，将订单存入数据库
+            order.setStatus(Constant.ORDER_STATUS_WAIT);
+            orderMapper.updateByPrimaryKey(order);
             ResultVO<CourseOrderVO> resultVO = updateCourseOrder(orderId,Constant.ORDER_STATUS_SUCCESS);
             if (resultVO.getCode().equals(Constant.REQUEST_SUCCESS)){
                 return new ResultVO<>(Constant.REQUEST_SUCCESS,"付款成功");
@@ -217,7 +219,7 @@ public class CourseOrderServiceImpl implements CourseOrderService {
 
         for(CourseOrder order: courseOrderList){
             if(order.getCourseId().equals(courseId)){
-                if(order.getStatus() == Constant.ORDER_STATUS_SUCCESS){
+                if(order.getStatus().equals(Constant.ORDER_STATUS_SUCCESS)){
                     return new ResultVO<>(Constant.REQUEST_FAIL,"已购买该课程");
 
                 }

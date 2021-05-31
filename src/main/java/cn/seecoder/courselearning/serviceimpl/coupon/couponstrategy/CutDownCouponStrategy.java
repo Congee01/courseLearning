@@ -5,6 +5,8 @@ import cn.seecoder.courselearning.util.JSONHelper;
 import cn.seecoder.courselearning.vo.order.CourseOrderVO;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 /**
  * 满减策略
  * 注意这里的满减策略的使用判断是按原价
@@ -21,12 +23,12 @@ public class CutDownCouponStrategy extends AbstractCouponStrategy {
             return false;
         }
         // 判断满减策略
-        return super.canUse(orderVO, coupon) && orderVO.getOrigin() >= (Integer)threshold;
+        return super.canUse(orderVO, coupon) && orderVO.getOrigin() >= Integer.parseInt((String)threshold);
     }
 
     @Override
     public int useCoupon(CourseOrderVO orderVO, Coupon coupon) {
-        Integer cutDown = (Integer)JSONHelper.getByProperty(coupon.getMetadata(), "cutDown");
+        Integer cutDown = Integer.parseInt((String) Objects.requireNonNull(JSONHelper.getByProperty(coupon.getMetadata(), "cutDown")));
         int initialCost = orderVO.getCost() == null ? orderVO.getOrigin() : orderVO.getCost();
         if (initialCost - cutDown > 0) {
             return initialCost - cutDown;

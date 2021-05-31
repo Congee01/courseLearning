@@ -9,6 +9,7 @@ import cn.seecoder.courselearning.service.course.CourseService;
 import cn.seecoder.courselearning.vo.order.CourseOrderVO;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 
 /**
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
  */
 public abstract class AbstractCouponStrategy implements CouponStrategy {
 
-    @Autowired
+    @Resource
     protected UserCouponMapper userCouponMapper;
 
     @Autowired

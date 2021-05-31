@@ -17,4 +17,5 @@ public interface CourseOrderMapper {
     List<CourseOrder> selectByUserId(Integer userId);
 
     CourseOrder queryMostRecentOrder(Integer userId, Integer courseId);
+    List<CourseOrder> selectSuccessOrders(Integer userid);
 }

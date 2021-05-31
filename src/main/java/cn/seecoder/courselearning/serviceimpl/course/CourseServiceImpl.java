@@ -63,6 +63,13 @@ public class CourseServiceImpl implements CourseService {
     public List<CourseVO> getBoughtCourses(Integer uid) {
         List<CourseVO> ret = new ArrayList<>();
         List<Course> courseList = courseMapper.selectByStudentId(uid);
+        List<CourseOrder> courseOrders = orderService.getSuccessOrders(uid);
+        List<Integer> courseIds = new ArrayList<Integer>();
+        for (CourseOrder order :
+                courseOrders) {
+            courseIds.add(order.getCourseId());
+        }
+        courseList.removeIf(course -> !courseIds.contains(course.getId()));
         for(Course course: courseList){
             boolean liked=courseLikesMapper.count(course.getId(),uid)>0;
             CourseVO courseVO=new CourseVO(course,true,false,liked);

@@ -5,6 +5,8 @@ import cn.seecoder.courselearning.util.JSONHelper;
 import cn.seecoder.courselearning.vo.order.CourseOrderVO;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 /**
  * 这里的折扣策略不需要满一定数额才能用，可以根据业务需求调整
  */
@@ -18,11 +20,11 @@ public class DiscountCouponStrategy extends AbstractCouponStrategy {
             return false;
         }
         // 判断满减策略
-        return super.canUse(orderVO, coupon) && (Double)discount > 0 && (Double)discount < 1;
+        return super.canUse(orderVO, coupon) && Double.parseDouble((String)discount) > 0 && Double.parseDouble((String)discount) < 1;
     }
     @Override
     public int useCoupon(CourseOrderVO orderVO, Coupon coupon) {
-        Double discount = (Double)JSONHelper.getByProperty(coupon.getMetadata(), "discount");
+        Double discount = Double.parseDouble((String) Objects.requireNonNull(JSONHelper.getByProperty(coupon.getMetadata(), "discount")));
         int initialCost = orderVO.getCost() == null ? orderVO.getOrigin() : orderVO.getCost();
        return (int)(initialCost * discount);
     }

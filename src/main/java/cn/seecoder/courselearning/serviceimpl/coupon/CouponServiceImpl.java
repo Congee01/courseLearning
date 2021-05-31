@@ -66,7 +66,6 @@ public class CouponServiceImpl implements CouponService {
      * @return
      */
     public ResultVO<CouponVO> createCoupon(CouponDTO couponDTO) {
-        System.out.println(couponDTO);
         Coupon coupon = new Coupon();
         BeanUtils.copyProperties(couponDTO, coupon);
         coupon.setValid(true);

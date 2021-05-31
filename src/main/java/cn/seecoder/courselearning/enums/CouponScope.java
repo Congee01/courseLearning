@@ -3,6 +3,8 @@ package cn.seecoder.courselearning.enums;
 import cn.seecoder.courselearning.po.coupon.Coupon;
 import cn.seecoder.courselearning.po.course.Course;
 import cn.seecoder.courselearning.util.JSONHelper;
+
+import java.util.Objects;
 import java.util.function.BiFunction;
 
 /**
@@ -13,9 +15,9 @@ import java.util.function.BiFunction;
 public enum CouponScope {
 
 
-    SINGLE("单个课程", (course,coupon) -> course.getId().equals((Integer)JSONHelper.getByProperty(coupon.getMetadata(), "courseId"))),
-    TEACHER("某个老师的课程", (course, coupon) -> course.getId().equals((Integer)JSONHelper.getByProperty(coupon.getMetadata(), "teacherId"))),
-    SCHOOL("某个学校的课程", (course, coupon) -> course.getId().equals((Integer)JSONHelper.getByProperty(coupon.getMetadata(), "schoolId"))),
+    SINGLE("单个课程", (course,coupon) -> course.getId().equals(Integer.parseInt((String) Objects.requireNonNull(JSONHelper.getByProperty(coupon.getMetadata(), "courseId"))))),
+    TEACHER("某个老师的课程", (course, coupon) -> course.getTeacherId().equals(Integer.parseInt((String) Objects.requireNonNull(JSONHelper.getByProperty(coupon.getMetadata(), "teacherId"))))),
+    SCHOOL("某个学校的课程", (course, coupon) -> course.getSchool().equals( Objects.requireNonNull(JSONHelper.getByProperty(coupon.getMetadata(), "schoolId")))),
     COMMON("通用，全站课程皆可使用", (course, coupon) -> true);
 
     private final String value;

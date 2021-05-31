@@ -54,4 +54,9 @@
     where user_id=#{userId} and course_id=#{courseId}
     order by create_time desc limit 1
   </select>
+  <select id="selectSuccessOrders" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, origin, cost, course_id, course_name, create_time, user_id, status
+    from course_order
+    where user_id=#{userId} and status = 1
+  </select>
 </mapper>

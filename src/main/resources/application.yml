@@ -7,7 +7,8 @@ spring:
     url: jdbc:mysql://localhost:3306/courselearning?setUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: 123456
+#    password: 123456
+    password: Llsbfqbpa731
   servlet:
     multipart:
       max-file-size: 200MB #设置上传文件大小不得超过200MB
@@ -28,7 +29,8 @@ logging:
 
 # 自定义标签 ${web.file-upload-path} 用于存储向服务器上传的文件
 web:
-  file-upload-path: /app/
+#  file-upload-path: /app/
+  file-upload-path: /project_uploaded/
 #web:
 #  file-upload-path: D:/courselearning/upload/
 

@@ -110,4 +110,12 @@
     group by c.id
     order by likes desc
   </select>
+  <select id="selectBySchoolId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select c.id, name, type, intro, picture, school, create_time, delete_time, cost, teacher_id, teacher_name, count(t.user_id) as likes
+    from course c
+           left join course_likes t
+                     on c.id = t.course_id
+    where school = #{schoolId}
+    group by c.id
+  </select>
 </mapper>
