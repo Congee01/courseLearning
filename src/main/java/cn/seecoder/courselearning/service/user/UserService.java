@@ -20,4 +20,5 @@ public interface UserService {
     void decreaseBalance(Integer id, Integer delta);
 
     List<User> getAll();
+
 }

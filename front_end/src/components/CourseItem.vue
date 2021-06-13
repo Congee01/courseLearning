@@ -18,7 +18,7 @@
     </v-card-text>
 
     <v-card-actions>
-      <v-btn text v-show="status === 0 || status === 1" @click="handleStudy"
+      <v-btn text v-show="status === 0 || status === 1 || status === 2" @click="handleStudy"
         >学习课程</v-btn
       >
       <v-btn text v-show="status === -1 || !hasLogin" @click="handlePeek"
@@ -55,6 +55,7 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { getUser } from "../api/user";
 
 export default Vue.extend({
   name: "CourseItem",
@@ -107,7 +108,9 @@ export default Vue.extend({
   data() {
     return {
       chip: ["免费", "已购"],
-      chipColor: ["success", "primary"]
+      chipColor: ["success", "primary"],
+      userID:"",
+      isVip:"",
     };
   },
   methods: {
@@ -127,7 +130,14 @@ export default Vue.extend({
     handleLike() {
       console.log("5");
       this.$emit("set-like", this.courseId);
-    }
+    },
+    handleVIP(){
+      const userId=window.localStorage.getItem("userId");
+      getUser(userId).then(res=>{
+        this.isVip=res.isVip;
+      })
+    },
+
   },
   computed: {
     text: function() {
@@ -142,9 +152,14 @@ export default Vue.extend({
         return 0;
       } else if (this.bought) {
         return 1;
+      }else if(this.isVip){
+        return 2;
       }
       return -1;
     }
+  },
+  mounted() {
+    this.handleVIP();
   }
 });
 </script>

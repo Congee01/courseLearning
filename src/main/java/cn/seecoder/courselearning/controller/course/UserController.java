@@ -1,5 +1,6 @@
 package cn.seecoder.courselearning.controller.course;
 
+import cn.seecoder.courselearning.po.user.User;
 import cn.seecoder.courselearning.service.user.UserService;
 import cn.seecoder.courselearning.vo.ResultVO;
 import cn.seecoder.courselearning.vo.user.UserFormVO;

@@ -10,6 +10,7 @@
     <result column="balance" jdbcType="INTEGER" property="balance" />
     <result column="user_role" jdbcType="VARCHAR" property="userRole" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="isVip" jdbcType="BOOLEAN" property="isVip" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user_info
@@ -18,32 +19,38 @@
   <insert id="insert" parameterType="cn.seecoder.courselearning.po.user.User" useGeneratedKeys="true" keyProperty="id">
     insert into user_info (id, uname, phone, 
       password, picture, balance, 
-      user_role, create_time)
+      user_role, create_time,isVip)
     values (#{id,jdbcType=INTEGER}, #{uname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, #{balance,jdbcType=INTEGER}, 
-      #{userRole,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+      #{userRole,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{isVip,jdbcType=BOOLEAN})
   </insert>
   <update id="updateByPrimaryKey" parameterType="cn.seecoder.courselearning.po.user.User">
     update user_info
     set uname = #{uname,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      picture = #{picture,jdbcType=VARCHAR}
+      picture = #{picture,jdbcType=VARCHAR},
+      isVip = #{isVip,jdbcType=BOOLEAN}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateIsVip" parameterType="cn.seecoder.courselearning.po.user.User">
+    update user_info
+    set isVip = #{isVip,jdbcType=BOOLEAN}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, uname, phone, password, picture, balance, user_role, create_time
+    select id, uname, phone, password, picture, balance, user_role, create_time, isVip
     from user_info
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select id, uname, phone, password, picture, balance, user_role, create_time
+    select id, uname, phone, password, picture, balance, user_role, create_time, isVip
     from user_info
     where phone = #{phone}
     limit 0,1
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, uname, phone, password, picture, balance, user_role, create_time
+    select id, uname, phone, password, picture, balance, user_role, create_time,isVip
     from user_info
   </select>
   <update id="increaseBalance">

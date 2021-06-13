@@ -212,12 +212,12 @@
         <div v-else>
           <v-card-title>优惠券选择</v-card-title>
           <v-data-table
-            v-model="selectedCoupons"
-            :headers="couponHeaders"
-            :items="coupons"
-            class="elevation-1"
-            show-select
-            @item-selected="onSelectCoupon"
+              v-model="selectedCoupons"
+              :headers="couponHeaders"
+              :items="coupons"
+              class="elevation-1"
+              show-select
+              @item-selected="onSelectCoupon"
           >
             <template #header.data-table-select></template>
           </v-data-table>
@@ -405,7 +405,6 @@ export default {
           this.selectedCoupons = this.currentOrder.usedCoupons
             ? this.currentOrder.usedCoupons
             : [];
-
           this.coupons = [...res.data, ...this.selectedCoupons]; // 将当前可用的 和 已经用的 合并起来展示，若之前创建过订单没有付款，再次进入时需要这样
         });
       });
@@ -534,6 +533,7 @@ export default {
         this.showSnackBar = true;
       });
     },
+
     leaveSettlement() {
       this.currentOrder = {};
       this.currentCourseId = 0;

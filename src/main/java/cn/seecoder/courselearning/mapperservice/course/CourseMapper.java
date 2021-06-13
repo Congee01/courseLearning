@@ -24,5 +24,6 @@ public interface CourseMapper {
 
     // 根据点赞数 返回热门课程列表
     List<Course> selectHotCourses();
+
     List<Course> selectBySchoolId(String schoolId);
 }

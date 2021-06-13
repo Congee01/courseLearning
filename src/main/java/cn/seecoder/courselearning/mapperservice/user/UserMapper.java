@@ -16,6 +16,8 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
+    void updateIsVip(@Param(value = "id") Integer id, @Param(value = "isVip") Boolean isVip);
+
     void increaseBalance(@Param(value = "id") Integer id, @Param(value = "delta")Integer delta);
 
     void decreaseBalance(@Param(value = "id") Integer id, @Param(value = "delta")Integer delta);

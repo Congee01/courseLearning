@@ -80,11 +80,25 @@ CREATE TABLE `course_order`  (
 -- ----------------------------
 -- Table structure for course_order_coupon
 -- ----------------------------
+DROP TABLE IF EXISTS `user_vip_order`;
+CREATE TABLE `user_vip_order`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `cost` int(11) NOT NULL ,
+  `status` int(11) NOT NULL,
+  `create_time` datetime(0) NOT NULL,
+  `validTime` varchar(100) NOT NULL ,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for course_order_coupon
+-- ----------------------------
 DROP TABLE IF EXISTS `course_order_coupon`;
 CREATE TABLE `course_order_coupon`  (
-  `order_id` int(11) NOT NULL,
-  `coupon_id` int(11) NOT NULL,
-  PRIMARY KEY (`order_id`, `coupon_id`) USING BTREE
+    `order_id` int(11) NOT NULL,
+    `coupon_id` int(11) NOT NULL,
+    PRIMARY KEY (`order_id`, `coupon_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -139,6 +153,19 @@ CREATE TABLE `user_coupon`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for user_vip
+-- ----------------------------
+DROP TABLE IF EXISTS `user_vip`;
+CREATE TABLE `user_vip`  (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `user_id` int(11) NOT NULL,
+    `start_time` datetime(0) NULL DEFAULT NULL,
+    `end_time` datetime(0) NULL DEFAULT NULL,
+    `valid` int(11) NOT NULL ,
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for user_info
 -- ----------------------------
 DROP TABLE IF EXISTS `user_info`;
@@ -151,13 +178,14 @@ CREATE TABLE `user_info`  (
   `balance` int(11) NOT NULL,
   `user_role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `create_time` datetime(0) NOT NULL,
+  `isVip` boolean,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES (1, '刘钦', '10112345678', '123456', NULL, 0, 'TEACHER', '2020-12-18 10:00:00');
-INSERT INTO `user_info` VALUES (2, '小明', '10212345678', '123456', NULL, 0, 'STUDENT', '2020-12-18 10:00:00');
+INSERT INTO `user_info` VALUES (1, '刘钦', '10112345678', '123456', NULL, 0, 'TEACHER', '2020-12-18 10:00:00',false);
+INSERT INTO `user_info` VALUES (2, '小明', '10212345678', '123456', NULL, 0, 'STUDENT', '2020-12-18 10:00:00',false);
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -1,7 +1,9 @@
 package cn.seecoder.courselearning.serviceimpl.user;
 
 import cn.seecoder.courselearning.mapperservice.user.UserMapper;
+import cn.seecoder.courselearning.mapperservice.user.UserVipMapper;
 import cn.seecoder.courselearning.po.user.User;
+import cn.seecoder.courselearning.po.user.UserVip;
 import cn.seecoder.courselearning.service.user.UserService;
 import cn.seecoder.courselearning.util.Constant;
 import cn.seecoder.courselearning.vo.ResultVO;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +21,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Resource
     UserMapper userMapper;
+    @Resource
+    UserVipMapper userVipMapper;
 
     @Override
     public ResultVO<UserVO> userRegister(UserVO vo) {
@@ -54,6 +59,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserVO getUser(Integer uid) {
         User userFromDB = userMapper.selectByPrimaryKey(uid);
+        UserVip userVip=userVipMapper.selectByPrimaryKey(uid);
+        if(userVip!=null) {
+            LocalDateTime endTime = userVip.getEndTime();
+            LocalDateTime now = LocalDateTime.now();
+            if (!now.isBefore(endTime)) {
+                userFromDB.setIsVip(false);
+                userMapper.updateIsVip(uid, false);
+                userVip.setValid(0);
+                userVipMapper.updateValid(uid, 0);
+            }
+        }
         if(userFromDB == null){
             return new UserVO();
         }else{
@@ -75,4 +91,5 @@ public class UserServiceImpl implements UserService {
     public List<User> getAll() {
         return userMapper.selectAll();
     }
+
 }

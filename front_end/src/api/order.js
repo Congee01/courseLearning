@@ -78,3 +78,4 @@ export const cancelCoupon = (order, couponId) => {
 export const payOrder = orderId => {
   return axios.post(`${ORDER_MODULE}/pay/${orderId}`).then(res => res.data);
 };
+

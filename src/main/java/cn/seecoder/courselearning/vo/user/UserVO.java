@@ -27,6 +27,8 @@ public class UserVO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
+    private Boolean isVip;
+
     public UserVO() {
     }
 
@@ -38,5 +40,6 @@ public class UserVO {
         balance = user.getBalance();
         userRole = user.getUserRole();
         createTime = user.getCreateTime();
+        isVip= user.getIsVip();
     }
 }

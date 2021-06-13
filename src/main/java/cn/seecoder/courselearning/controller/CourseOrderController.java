@@ -60,4 +60,7 @@ public class CourseOrderController {
     public ResultVO<Boolean> payOrder(@PathVariable Integer orderId){
         return orderService.payOrder(orderId);
     }
+
+
+
 }

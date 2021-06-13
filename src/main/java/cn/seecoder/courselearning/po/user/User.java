@@ -22,6 +22,8 @@ public class User {
 
     private Date createTime;
 
+    private Boolean isVip;
+
     public Integer getId() {
         return id;
     }
@@ -86,6 +88,11 @@ public class User {
         this.createTime = createTime;
     }
 
+    public Boolean getIsVip(){return isVip;}
+
+    public void setIsVip(Boolean isVip) {
+        this.isVip=isVip;
+    }
     public User() {
     }
 
@@ -98,5 +105,6 @@ public class User {
         balance = userVO.getBalance();
         userRole = userVO.getUserRole();
         createTime = userVO.getCreateTime();
+        isVip=userVO.getIsVip();
     }
 }

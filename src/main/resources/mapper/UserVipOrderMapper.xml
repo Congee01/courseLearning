@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.seecoder.courselearning.mapperservice.order.UserVipOrderMapper">
+    <resultMap id="BaseResultMap" type="cn.seecoder.courselearning.po.order.UserVipOrder">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="cost" jdbcType="INTEGER" property="cost" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="validTime" jdbcType="VARCHAR" property="validTime" />
+    </resultMap>
+    <insert id="insert" parameterType="cn.seecoder.courselearning.po.order.UserVipOrder" useGeneratedKeys="true" keyProperty="id">
+        insert into user_vip_order (id, cost,user_id,status,create_time,validTime)
+        values (#{id,jdbcType=INTEGER}, #{cost,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},#{status,jdbcType=INTEGER}
+        ,#{createTime,jdbcType=TIMESTAMP},#{validTime,jdbcType=VARCHAR})
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="cn.seecoder.courselearning.po.order.UserVipOrder">
+        update user_vip_order
+        set cost = #{cost,jdbcType=INTEGER},
+            user_id = #{userId,jdbcType=INTEGER},
+            status = #{status,jdbcType=INTEGER},
+            create_time= #{createTime,jdbcType=TIMESTAMP},
+            validTime = #{validTime,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select id, cost,user_id, status , create_time , validTime
+        from user_vip_order
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+</mapper>
